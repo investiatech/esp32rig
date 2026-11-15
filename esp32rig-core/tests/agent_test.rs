@@ -1,5 +1,5 @@
-use esp32rig::model::{ChatRequest, ChatResponse, ToolCall};
-use esp32rig::prelude::*;
+use esp32rig_core::model::{ChatRequest, ChatResponse, ToolCall};
+use esp32rig_core::prelude::*;
 
 struct TestModel;
 

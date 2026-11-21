@@ -2,7 +2,7 @@ use crate::model::{ChatResponse, ToolCall};
 use crate::model::request::ChatRequest;
 
 pub trait Model {
-    fn chat<'a>(
+    async fn chat<'a>(
         &mut self,
         request: &ChatRequest<'_>,
         response_buffer: &'a mut [u8],

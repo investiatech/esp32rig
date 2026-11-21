@@ -1,5 +1,5 @@
 use crate::executor::Executor;
-use crate::model::Model;
+use crate::model::{ChatRequest, ChatResponse, Message, Model, ModelError, ToolCall};
 use crate::registry::ToolRegistry;
 use crate::tool::ToolError;
 
@@ -19,6 +19,22 @@ impl<ModelType: Model> Agent<ModelType> {
 
     pub fn model_mut(&mut self) -> &mut ModelType {
         &mut self.model
+    }
+
+    pub async fn chat<'a>(
+        &mut self,
+        messages: &'a [Message<'a>],
+        response_buffer: &'a mut [u8],
+        tool_call_buffer: &'a mut [ToolCall<'a>],
+    ) -> Result<ChatResponse<'a>, ModelError> {
+        let request = ChatRequest {
+            messages,
+            tools: self.tools.tools(),
+        };
+
+        self.model
+            .chat(&request, response_buffer, tool_call_buffer)
+            .await
     }
 
     pub fn tools(&self) -> &ToolRegistry {

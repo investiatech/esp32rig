@@ -15,7 +15,7 @@ impl<'a> ChatResponse<'a> {
     }
 
     pub fn has_tool_calls(&self) -> bool {
-        self.tool_calls.is_empty()
+        !self.tool_calls.is_empty()
     }
 
     pub fn has_content(&self) -> bool {
